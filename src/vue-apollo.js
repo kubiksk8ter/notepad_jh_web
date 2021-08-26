@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
+import { setContext } from 'apollo-link-context'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
 
 // Install the vue plugin
@@ -14,6 +15,18 @@ const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://notepad.jakubh
 export const filesRoot = process.env.VUE_APP_FILES_ROOT || httpEndpoint.substr(0, httpEndpoint.indexOf('/graphql'))
 
 Vue.prototype.$filesRoot = filesRoot
+
+const authLink = setContext(async (_, { headers }) => {
+  // Use your async token function here:
+  const token = JSON.parse(localStorage.getItem('apollo-token'))
+  // Return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token || ''
+    }
+  }
+})
 
 // Config
 const defaultOptions = {
@@ -36,7 +49,7 @@ const defaultOptions = {
   // note: don't override httpLink here, specify httpLink options in the
   // httpLinkOptions property of defaultOptions.
   // link: myLink
-
+  link: authLink
   // Override default cache
   // cache: myCache
 
@@ -64,7 +77,7 @@ export function createProvider (options = {}) {
     defaultClient: apolloClient,
     defaultOptions: {
       $query: {
-        // fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'cache-and-network',
       },
     },
     errorHandler (error) {
