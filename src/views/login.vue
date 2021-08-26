@@ -28,7 +28,7 @@
 </template>
 
 <script>
-//import "./Users.gql"
+import ALL_USERS from "../graphql/queries"
 
 export default {  
   name: 'login',
@@ -49,17 +49,16 @@ export default {
     login() {   
       this.$router.push("notepad")
     },
-    async getUsernames() {
-      /*
-      await this.$apollo.query({query: Users}).then((res) => {
+    async getUsernames() { 
+
+      await this.$apollo.query({query: ALL_USERS}).then((res) => {
           this.users = res?.data?.users
         })
-      */
-      /*
+      
       for(let user of this.users) {
         console.log(user.username)
       }
-      */
+      
     }
   },
 }
