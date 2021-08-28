@@ -1,9 +1,9 @@
 <template>
-    <h1>Ahojahopojojaohhsadhujahjklnjmlksad</h1>
+    <h1>Hey {{user.name}} you have been authenticated</h1>
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {  
   name: 'notepad',
   data() {
@@ -17,6 +17,9 @@ export default {
   methods: {     
 
   },
+  computed: {
+    ...mapGetters(['user'])
+  }
 }
 </script>
 

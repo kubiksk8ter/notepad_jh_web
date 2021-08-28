@@ -22,8 +22,7 @@
                 class="form-control"
                 formControlName="repeat password">
         <button type="submit"
-                class="btn btn-primary"
-                v-on:click="singUp()">Sing up
+                class="btn btn-primary">Sing up
         </button> 
         <div v-if="authFailed">User allready exists</div>         
       </form>
@@ -32,7 +31,7 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
 export default {  
   name: 'singUp',
   data() {
@@ -47,33 +46,11 @@ export default {
       authFailed: false,    
     }   
   },
-  created() {
-    this.getUsernames();
-  },
-  methods: {     
-    async singUp() {       
-      for(let user of this.users) {     
-        if(this.username == user.username) {      
-          this.authFailed = true
-        }
-        else {          
-            console.log(`User ${this.authDetails.username} created`)
-            //this.$router.push("/notepad")
-        }
-      }
-    },
-    async getUsernames() {
-      /*
-      await apolloClient.query({query: ALL_USERS}).then((res) => {
-          this.users = res?.data?.users
-        })
-      */
-      /*
-      for(let user of this.users) {
-        console.log(user.username)
-      }
-      */
-    }
+  methods: { 
+    ...mapActions(['register']),   
+    singUp() {       
+      this.register(this.authDetails).then(() => this.$router.push('/notepad'))
+    },    
   },
 }
 </script>

@@ -2,6 +2,10 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1 id="header">Notepad J.H.</h1>
+    <div v-if="authStatus" id="nav">
+      <div> Hi {{user.name}}</div>
+      <button class="auth-button" @click="logOut" > Log Out</button>
+    </div>
     <!--
     <div id="nav">
       <router-link to="/">login</router-link> |
@@ -11,6 +15,31 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  name: 'App',
+  component: {
+
+  },
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+    logOut: function () {
+      this.$store.dispatch('logOut')
+        .then(() => this.$router.push('/login'))
+    }
+
+  },
+  computed: {
+    ...mapGetters(['authStatus', 'user'])
+  }
+}
+</script>
 
 <style>
 #app {

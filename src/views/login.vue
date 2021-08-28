@@ -1,24 +1,23 @@
 <template>
     <div id="login">
-      <form @submit.prevent="login"
+      <form @submit.prevent="loginUser"
             class="login-form"
             v-on:mouseover="animation='colorize'"
             v-on:mouseleave="animation='decolorize'"
             v-bind:class="animation">
             Log-in  
-        <input  v-model="username" 
+        <input  v-model="authDetails.username" 
                 placeholder="username"
                 type="text"
                 class="form-control"
                 formControlName="username">
-        <input  v-model="password" 
+        <input  v-model="authDetails.password" 
                 placeholder="password"
                 type="password"
                 class="form-control"
                 formControlName="password">        
         <button type="submit"
-                class="btn btn-primary"
-                v-on:click="login()">Log in
+                class="btn btn-primary">Log in
         </button>
         <div v-if="authFailed">Login failed</div> <br>
         <router-link to="/singUp" style="font-size:10px">Register new user</router-link>     
@@ -28,14 +27,16 @@
 </template>
 
 <script>
-import ALL_USERS from "../graphql/queries"
-
+import { mapActions } from 'vuex'
+import gql from 'graphql-tag'
 export default {  
   name: 'login',
   data() {
     return {
-      username: "",
-      password: "",
+      authDetails: {
+        username: "",
+        password: ""
+      },     
       animation: "",
       users: [],
       authFailed: false, 
@@ -43,23 +44,30 @@ export default {
     }   
   },
   created() {
-    this.getUsernames();
+    //this.getUsernames()
   },
-  methods: {     
-    login() {   
-      this.$router.push("notepad")
+  methods: {
+    ...mapActions(['login']),
+         
+    loginUser: async function() {
+    /*
+      this.login(this.authDetails.username, this.authDetails.password).then(()=>console.log("loged in"
+      ))       
     },
-    async getUsernames() { 
-
-      await this.$apollo.query({query: ALL_USERS}).then((res) => {
-          this.users = res?.data?.users
-        })
-      
-      for(let user of this.users) {
-        console.log(user.username)
-      }
-      
+    */
+    
+    await this.$apollo.mutate({ mutation: gql`
+        mutation LoginMutation($loginUsername: String! $loginPassword: String!) {
+        login(username: $loginUsername password: $loginPassword) {
+            token                   
+            }
+        }`
+      , variables: { loginUsername: 'User3', loginPassword: 'admin'} }).then((res)=> {
+        console.log('User loged in!')
+        console.log(res?.data?.username)
+      })
     }
+    
   },
 }
 </script>

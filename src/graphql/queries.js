@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
-const ALL_USERS = gql`
-    query allUsers 
+export const ALL_USERS = gql`
+    query
         { users 
             {id, 
              username, 
@@ -9,4 +9,14 @@ const ALL_USERS = gql`
             } 
         }
     `
-export default ALL_USERS
+
+export const LOGGED_IN_USER = gql`
+    query {
+        me {
+            id
+            username
+        }
+    }
+`
+
+//export default ALL_USERS
