@@ -45,6 +45,7 @@ const router = new VueRouter({
 // Global Route Guards
 router.beforeEach((to, from, next) => {
   // Check if the user is logged in
+  //console.log("isAuth: " + store.getters.isAuthenticated + " authStatus: " + store.getters.authStatus + " user: " + store.getters.user.username)
   const isUserLoggedIn = store.getters.isAuthenticated
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isUserLoggedIn) {

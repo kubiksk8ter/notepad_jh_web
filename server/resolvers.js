@@ -5,12 +5,17 @@ const JWT_SECRET = 'secret'
 
 module.exports = {
     Query: {
-        //info: () => 'This is the API of a Notepad UX',        
-        users: async (parent, args, context) => {           
+        //info: () => 'This is the API of a Notepad UX',
+        me: async(_, args, {user}, context) => {
+            return await context.prisma.user.findUnique({
+                where: {id:user.id}
+            });
+        },        
+        users: async (parent, args, context) => {                     
             return context.prisma.user.findMany();
         },
         user: async (parent, {id}, context) => {
-            try {
+            try {                
                 let ID = parseInt(id);         
                 const user = context.prisma.user.findUnique({
                     where: {id:ID}

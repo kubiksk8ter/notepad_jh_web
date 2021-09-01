@@ -6,12 +6,12 @@
             v-on:mouseleave="animation='decolorize'"
             v-bind:class="animation">
             Sing-up  
-        <input  v-model="authDeatails.username" 
+        <input  v-model="authDetails.username" 
                 placeholder="username"
                 type="text"
                 class="form-control"
                 formControlName="username">
-        <input  v-model="authDeatails.password" 
+        <input  v-model="authDetails.password" 
                 placeholder="password"
                 type="password"
                 class="form-control"
@@ -36,7 +36,7 @@ export default {
   name: 'singUp',
   data() {
     return {
-      authDeatails: {
+      authDetails: {
         username: "",
         password: ""
       },

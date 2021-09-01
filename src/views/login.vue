@@ -28,7 +28,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import gql from 'graphql-tag'
+//import gql from 'graphql-tag'
 export default {  
   name: 'login',
   data() {
@@ -49,13 +49,10 @@ export default {
   methods: {
     ...mapActions(['login']),
          
-    loginUser: async function() {
+    loginUser: function() {   
+        this.login(this.authDetails).then(()=>this.$router.push("/notepad"))
+    } 
     /*
-      this.login(this.authDetails.username, this.authDetails.password).then(()=>console.log("loged in"
-      ))       
-    },
-    */
-    
     await this.$apollo.mutate({ mutation: gql`
         mutation LoginMutation($loginUsername: String! $loginPassword: String!) {
         login(username: $loginUsername password: $loginPassword) {
@@ -64,10 +61,10 @@ export default {
         }`
       , variables: { loginUsername: 'User3', loginPassword: 'admin'} }).then((res)=> {
         console.log('User loged in!')
-        console.log(res?.data?.username)
+        console.log(res?.data?.login.token)
       })
     }
-    
+    */
   },
 }
 </script>

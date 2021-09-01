@@ -48,7 +48,13 @@ async function startApolloServer() {
   const server = new ApolloServer({ 
     typeDefs,
     resolvers,
-    context: { prisma },
+    context: ({req}) => {
+      const token = req.get('Authorization') || ''
+      return {    
+        prisma,
+        user: getUser(token.replace('Bearer', ''))
+      }
+    },
     introspection: true,
     playground: true
   });

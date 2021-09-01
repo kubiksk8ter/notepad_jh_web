@@ -1,7 +1,0 @@
-query allUsers 
-  { users 
-    {id, 
-     username, 
-     password
-    } 
-  }

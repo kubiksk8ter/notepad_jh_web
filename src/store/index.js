@@ -36,7 +36,7 @@ export default new Vuex.Store({
 
   actions: {
     async register ({ commit, dispatch }, authDetails) {
-      try {
+      try {      
         const { data } = await apolloClient.mutate({ mutation: REGISTER_USER, variables: { ...authDetails } })
         const token = JSON.stringify(data.createUser.token)
         commit('SET_TOKEN', token)
@@ -44,18 +44,23 @@ export default new Vuex.Store({
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
       } catch (e) {
-        console.log(e)
+        if(e.message.includes("Unique constraint failed on the fields: (`username`)")) {
+          console.log("Account whit this username allready exists!")
+        }       
       }
     },
-    async login ({ commit, dispatch }, password, username) {
+    async login ({ commit, dispatch }, authDetails) {
       try {      
-        const { data } = await apolloClient.mutate({ mutation: LOGIN_USER, variables: { loginUsername: username, loginPassword: password } })
+        const { data } = await apolloClient.mutate({ mutation: LOGIN_USER, variables: { ...authDetails } })
         const token = JSON.stringify(data.login.token)
         commit('SET_TOKEN', token)
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
       } catch (e) {
-        console.log(e)
+        if(e.message == "GraphQL error: Cannot read property 'password' of null") {
+          console.log("Incorrect name or password!")
+        }
+        console.log(e.message)
       }
     },
     async setUser ({ commit }) {
