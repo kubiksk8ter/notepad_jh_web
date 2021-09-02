@@ -5,12 +5,7 @@ const JWT_SECRET = 'secret'
 
 module.exports = {
     Query: {
-        //info: () => 'This is the API of a Notepad UX',
-        me: async(_, args, {user}, context) => {
-            return await context.prisma.user.findUnique({
-                where: {id:user.id}
-            });
-        },        
+        //info: () => 'This is the API of a Notepad UX',        
         users: async (parent, args, context) => {                     
             return context.prisma.user.findMany();
         },
@@ -26,7 +21,20 @@ module.exports = {
                 throw new Error(e.message)
             }
                       
-        }
+        },
+        me: async(parent, args, context, info) => {
+            try {  
+                //console.log(context.user)             
+                const user = await context.prisma.user.findUnique({
+                    where: {id:context.user.id}
+                });
+                return user
+            }
+            catch(e) {
+                throw new Error (e.message)
+            }
+            
+        },
     },
     Mutation: {
         createUser: async (parent, args, context, info) => {

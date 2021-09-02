@@ -10,7 +10,7 @@ const fs = require ('fs');
 const https = require('https');
 const http = require('http');
 
-const { JWT_SECRET } = 'secret'
+const JWT_SECRET = 'secret'
 
 const getUser = token => {
   try {
@@ -42,7 +42,7 @@ async function startApolloServer() {
     development: { ssl: false, port: 4000, hostname: 'localhost' }
   };
 
-  const environment = process.env.NODE_ENV || 'production';
+  const environment = process.env.NODE_ENV || 'development';
   const config = configurations[environment];
 
   const server = new ApolloServer({ 

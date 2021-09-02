@@ -7,7 +7,6 @@ import { LOGIN_USER, REGISTER_USER } from '@/graphql/mutations'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-
   state: {
     token: null,
     user: {},
@@ -27,6 +26,9 @@ export default new Vuex.Store({
     LOGIN_USER (state, user) {
       state.authStatus = true
       state.user = { ...user }
+      setTimeout(()=>{
+        console.log("Vuex:\nisAuth: " + state.isAuthenticated + "\nauthStatus: " + state.authStatus + "\nuser: " + state.user.id)
+      },1000)
     },
     LOGOUT_USER (state) {
       state.authStatus = ''
@@ -40,7 +42,7 @@ export default new Vuex.Store({
         const { data } = await apolloClient.mutate({ mutation: REGISTER_USER, variables: { ...authDetails } })
         const token = JSON.stringify(data.createUser.token)
         commit('SET_TOKEN', token)
-        // onLogin(apolloClient, user.token)
+        //onLogin(apolloClient, user.token)
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
       } catch (e) {
