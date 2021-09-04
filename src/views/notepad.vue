@@ -1,5 +1,5 @@
 <template>
-    <h1>Hey {{user.name}} you have been authenticated</h1>
+    <h1>Hey {{user.username}} you have been authenticated</h1>
 </template>
 
 <script>
