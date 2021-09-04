@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { onLogout, apolloClient } from '@/vue-apollo'
 import { LOGGED_IN_USER } from '@/graphql/queries'
 import { LOGIN_USER, REGISTER_USER } from '@/graphql/mutations'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
@@ -10,9 +11,9 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('apollo-token') || null,
     user: {},
-    authStatus: false
+    authStatus: 'logged out'
   },
-
+  plugins: [createPersistedState()],
   getters: {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.authStatus,
@@ -24,15 +25,18 @@ export default new Vuex.Store({
       state.token = token
     },
     LOGIN_USER (state, user) {
-      state.authStatus = true
+      state.authStatus = 'logged in'
       state.user = { ...user }
+      /*test
       setTimeout(()=>{
-        console.log("Vuex:\nisAuth: " + state.isAuthenticated + "\nauthStatus: " + state.authStatus + "\nuser: " + state.user.id)
+        console.log("Vuex:\nisAuth: " + state.isAuthenticated + "\nauthStatus: " + state.authStatus + "\nuserId: " + state.user.id)
       },1000)
+      */
     },
     LOGOUT_USER (state) {
-      state.authStatus = ''
+      state.authStatus = 'logged out'
       state.token = '' && localStorage.removeItem('apollo-token')
+      state.user = {}
     }
   },
 

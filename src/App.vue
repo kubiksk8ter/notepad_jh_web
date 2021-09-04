@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1 id="header">Notepad J.H.</h1>
-    <div v-if="authStatus" id="nav">
+    <div v-if="authStatus == 'logged in'" id="nav">
       <div> Hi {{user.username}}</div>
       <button class="auth-button" @click="logOut" > Log Out</button>
     </div>

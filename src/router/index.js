@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/notepad',
     name: 'home',
   },
   {
@@ -41,9 +41,11 @@ const router = new VueRouter({
 // Global Route Guards
 router.beforeEach((to, from, next) => {
   // Check if the user is logged in
+  // test
   setTimeout(()=>{
-    console.log("Router:\nisAuth: " + store.getters.isAuthenticated + "\nauthStatus: " + store.getters.authStatus + "\nuser: " + store.getters.user.id)
+    console.log("Router:\nisAuth: " + store.getters.isAuthenticated + "\nauthStatus: " + store.getters.authStatus + "\nuserId: " + store.getters.user.id)
   },1000)
+  
   const isUserLoggedIn = store.getters.isAuthenticated
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isUserLoggedIn) {
