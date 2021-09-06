@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1 id="header">Notepad J.H.</h1>
-    <div v-if="authStatus == 'logged in'" id="nav">
-      <div> Hi {{user.username}}</div>
-      <button class="auth-button" @click="logOut" > Log Out</button>
+    <div class="nav">
+      <img alt="Vue logo" src="./assets/logo.png">     
+      <h1 class="header vert-centered">Notepad J.H.</h1>
+      <div class="auth-status" v-if="authStatus == 'logged in'">
+        <div class="vert-centered">{{user.username}}</div>
+        <button class="vert-centered auth-button btn btn-primary" @click="logOut" > Log Out</button>
+      </div>
     </div>
+    
     <!--
     <div id="nav">
       <router-link to="/">login</router-link> |
       <router-link to="/notepad">notepad</router-link>
     </div>
     -->
-    <router-view/>
+    <router-view id="router"/>
   </div>
 </template>
 
@@ -42,6 +45,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Allison&display=swap');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,22 +56,39 @@ export default {
   justify-content: center; 
   align-items: center;
 }
+.nav {
+  width: 100%; height: 60px;
+  box-shadow: 0px 0px 10px 10px rgb(57, 57, 57);
+}
 img {
   margin: 10px;
-  width: 80px; height: 80px;
+  width: 40px; height: 40px;
 }
-#header {
-  font-size: 25px;
+.vert-centered {
+  position: relative;
+  height: fit-content;
+  top: 50%; transform: translateY(-50%); 
 }
-#nav {
+.header {
+  position: relative; left: calc(50% - 130px);
+  font-family: 'Allison', cursive;
+}
+.auth-status {
+  margin-left: auto;
   font-size: 13px;
-  padding-bottom: 15px;
+  display: flex; flex-direction: row;
+  height: inherit;
+  padding: 5px; 
 }
-#nav a {
+.auth-status > * {
+    padding: 5px;
+}
+#router {margin-top: 20px}
+.auth-status a {
   font-weight: bold;
   color: #2c3e50;
 }
-#nav a.router-link-exact-active {
+.auth-status a.router-link-exact-active {
   color: #42b983; 
 }
 </style>

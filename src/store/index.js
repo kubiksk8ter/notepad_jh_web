@@ -11,13 +11,15 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('apollo-token') || null,
     user: {},
-    authStatus: 'logged out'
+    authStatus: 'logged out',
+    error: null
   },
   plugins: [createPersistedState()],
   getters: {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.authStatus,
-    user: state => state.user
+    user: state => state.user,
+    error: state => state.error
   },
 
   mutations: {
@@ -49,9 +51,10 @@ export default new Vuex.Store({
         //onLogin(apolloClient, user.token)
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
+        this.state.error = null
       } catch (e) {
         if(e.message.includes("Unique constraint failed on the fields: (`username`)")) {
-          console.log("Account whit this username allready exists!")
+          this.state.error = "Account with this username allready exists!"
         }       
       }
     },
@@ -62,9 +65,13 @@ export default new Vuex.Store({
         commit('SET_TOKEN', token)
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
+        this.state.error = null
       } catch (e) {
         if(e.message == "GraphQL error: Cannot read property 'password' of null") {
-          console.log("Incorrect name or password!")
+          this.state.error = "Incorrect name or password!"
+        }
+        else if(e.message == "GraphQL error: Incorrect password") {
+          this.state.error = "Incorect password!"
         }
         console.log(e.message)
       }

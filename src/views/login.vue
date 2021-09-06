@@ -15,11 +15,13 @@
                 placeholder="password"
                 type="password"
                 class="form-control"
-                formControlName="password">        
+                formControlName="password">
+        <div class="error-log" v-if="error != null">
+          {{error}}
+        </div>                
         <button type="submit"
                 class="btn btn-primary">Log in
-        </button>
-        <div v-if="authFailed">Login failed</div> <br>
+        </button><br>
         <router-link to="/singUp" style="font-size:10px">Register new user</router-link>     
       </form>
       
@@ -28,7 +30,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-//import gql from 'graphql-tag'
+import { mapGetters } from 'vuex'
 export default {  
   name: 'login',
   data() {
@@ -51,7 +53,7 @@ export default {
          
     loginUser: function() {   
         this.login(this.authDetails).then(()=>this.$router.push("/notepad"))
-    } 
+    }, 
     /*
     await this.$apollo.mutate({ mutation: gql`
         mutation LoginMutation($loginUsername: String! $loginPassword: String!) {
@@ -66,6 +68,9 @@ export default {
     }
     */
   },
+  computed: {
+    ...mapGetters(['error'])
+  }
 }
 </script>
 
@@ -79,6 +84,10 @@ export default {
   }
   .login-form > * {
     margin-top: 5px;
+  }
+  .error-log {
+    font-size: 14px;
+    color: rgb(255, 0, 0);
   }
   .colorize {
     background-color: rgb(132, 0, 255);

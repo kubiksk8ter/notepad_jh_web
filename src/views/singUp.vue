@@ -21,10 +21,13 @@
                 type="password"
                 class="form-control"
                 formControlName="repeat password">
+        <div class="error-log" v-if="error != null">
+          {{error}}
+        </div>
         <button type="submit"
                 class="btn btn-primary">Sing up
-        </button> 
-        <div v-if="authFailed">User allready exists</div>         
+        </button><br> 
+        <router-link to="/login" style="font-size:10px">Login</router-link>          
       </form>
       
     </div>
@@ -32,6 +35,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {  
   name: 'singUp',
   data() {
@@ -52,6 +56,9 @@ export default {
       this.register(this.authDetails).then(() => this.$router.push('/notepad'))
     },    
   },
+  computed: {
+    ...mapGetters(['error'])
+  }
 }
 </script>
 
@@ -65,6 +72,10 @@ export default {
   }
   .sing-up-form > * {
     margin-top: 5px;
+  }
+  .error-log {
+    font-size: 14px;
+    color: rgb(255, 0, 0);
   }
   .colorize {
     background-color: rgb(132, 0, 255);

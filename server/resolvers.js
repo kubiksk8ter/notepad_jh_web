@@ -7,10 +7,18 @@ module.exports = {
     Query: {
         //info: () => 'This is the API of a Notepad UX',        
         users: async (parent, args, context) => {                     
-            return context.prisma.user.findMany();
+            
+            try { 
+                if(!context.prisma.user) { throw new Error('You are not authenticated!') }               
+                return context.prisma.user.findMany();
+            }
+            catch (e) {
+                throw new Error(e.message)
+            }
         },
         user: async (parent, {id}, context) => {
-            try {                
+            try {
+                if(!context.prisma.user) { throw new Error('You are not authenticated!') }                
                 let ID = parseInt(id);         
                 const user = context.prisma.user.findUnique({
                     where: {id:ID}
@@ -19,12 +27,11 @@ module.exports = {
             }
             catch (e) {
                 throw new Error(e.message)
-            }
-                      
+            }                     
         },
         me: async(parent, args, context, info) => {
-            try {  
-                //console.log(context.user)             
+            try {
+                if(!context.prisma.user) { throw new Error('You are not authenticated!') }               
                 const user = await context.prisma.user.findUnique({
                     where: {id:context.user.id}
                 });

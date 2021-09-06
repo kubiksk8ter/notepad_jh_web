@@ -41,19 +41,27 @@ const router = new VueRouter({
 // Global Route Guards
 router.beforeEach((to, from, next) => {
   // Check if the user is logged in
-  // test
+  /* test
   setTimeout(()=>{
     console.log("Router:\nisAuth: " + store.getters.isAuthenticated + "\nauthStatus: " + store.getters.authStatus + "\nuserId: " + store.getters.user.id)
   },1000)
-  
+  */
   const isUserLoggedIn = store.getters.isAuthenticated
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isUserLoggedIn) {
       store.dispatch('logOut')
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
+      if(from.path == "/singUp") {
+        next({
+          path: '/singUp',
+          query: { redirect: to.fullPath }
+        })
+      }
+      else {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        })
+      }
     } else {
       next()
     }
