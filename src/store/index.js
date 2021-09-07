@@ -14,7 +14,11 @@ export default new Vuex.Store({
     authStatus: 'logged out',
     error: null
   },
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState({
+      paths: ['user','token','authStatus'],
+    }),
+  ],
   getters: {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.authStatus,

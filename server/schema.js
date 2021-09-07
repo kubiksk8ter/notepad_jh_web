@@ -6,14 +6,23 @@ const typeDefs = gql`
         user: User!
     }   
     type User {
-        id:ID!
+        id: ID!
         username: String!,
-        password: String!
+        password: String!,
+        notes: [Note]!
+    }
+    type Note {
+        id: ID!
+        title: String,
+        body: String,
+        user: User!
     }
     type Query {
         users: [User]
         user(id:ID): User
 	    me: User
+        notes: [Note]
+        note: Note       
     }
     type Mutation {
         createUser(
