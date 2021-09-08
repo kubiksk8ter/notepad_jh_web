@@ -15,6 +15,7 @@ const typeDefs = gql`
         id: ID!
         title: String,
         body: String,
+        isDone: Boolean,
         user: User!
     }
     type Query {
@@ -22,7 +23,7 @@ const typeDefs = gql`
         user(id:ID): User
 	    me: User
         notes: [Note]
-        note: Note       
+        note(id:ID): Note       
     }
     type Mutation {
         createUser(
@@ -34,6 +35,12 @@ const typeDefs = gql`
             password: String!
 	    ): AuthPayload!
         deleteUser (id:ID!): User
+        createNote(
+            userId:ID!
+            title: String!
+            body: String!
+            isDone: Boolean!
+        ): Note!
     }
 `;
 

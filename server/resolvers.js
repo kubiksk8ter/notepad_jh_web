@@ -6,19 +6,18 @@ const JWT_SECRET = 'secret'
 module.exports = {
     Query: {
         //info: () => 'This is the API of a Notepad UX',        
-        users: async (parent, args, context) => {                     
-            
+        users: async (parent, args, context, info) => {                                
             try { 
-                if(!context.prisma.user) { throw new Error('You are not authenticated!') }               
+                if(!context.user) { throw new Error('You are not authenticated!') }               
                 return context.prisma.user.findMany();
             }
             catch (e) {
                 throw new Error(e.message)
             }
         },
-        user: async (parent, {id}, context) => {
+        user: async (parent, {id}, context, info) => {
             try {
-                if(!context.prisma.user) { throw new Error('You are not authenticated!') }                
+                if(!context.user) { throw new Error('You are not authenticated!') }                
                 let ID = parseInt(id);         
                 const user = context.prisma.user.findUnique({
                     where: {id:ID}
@@ -31,7 +30,7 @@ module.exports = {
         },
         me: async(parent, args, context, info) => {
             try {
-                if(!context.prisma.user) { throw new Error('You are not authenticated!') }               
+                if(!context.user) { throw new Error('You are not authenticated!') }               
                 const user = await context.prisma.user.findUnique({
                     where: {id:context.user.id}
                 });
@@ -39,8 +38,31 @@ module.exports = {
             }
             catch(e) {
                 throw new Error (e.message)
+            }          
+        },
+        notes: async (parent, args, context, info) => {                                
+            try { 
+                if(!context.user) { throw new Error('You are not authenticated!') }               
+                return context.prisma.notes.findUnique({
+                    where: {userId: context.user.id}
+                });
             }
-            
+            catch (e) {
+                throw new Error(e.message)
+            }
+        }, 
+        note: async (parent, {id}, context, info) => {
+            try {
+                if(!context.user) { throw new Error('You are not authenticated!') }                
+                let ID = parseInt(id);         
+                const user = context.prisma.note.findUnique({
+                    where: {id:ID}
+                });
+                return user;
+            }
+            catch (e) {
+                throw new Error(e.message)
+            }                     
         },
     },
     Mutation: {
@@ -58,6 +80,24 @@ module.exports = {
                     { expiresIn: '1y' }
                 )  
                 return {token, user}
+            }
+            catch(e) {
+                throw new Error(e.message);
+            }
+        },
+        createNote: async (parent, args, context, info) => {
+            try {
+                let userID = parseInt(args.userId);
+                if(!context.user) { throw new Error('You are not authenticated!') }
+                const note = await context.prisma.note.create({
+                    data: {
+                        userId: userID,
+                        title: args.title,
+                        body: args.body,
+                        isDone: args.isDone
+                    }
+                });  
+                return note
             }
             catch(e) {
                 throw new Error(e.message);
@@ -90,6 +130,6 @@ module.exports = {
             });
             return user;
         },         
-    }
+    },   
 };
 
