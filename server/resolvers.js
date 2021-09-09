@@ -42,10 +42,24 @@ module.exports = {
         },
         notes: async (parent, args, context, info) => {                                
             try { 
-                if(!context.user) { throw new Error('You are not authenticated!') }               
-                return context.prisma.notes.findUnique({
-                    where: {userId: context.user.id}
-                });
+                if(!context.user) { throw new Error('You are not authenticated!') }
+                const notes = context.prisma.note.findMany()
+                return notes                               
+            }
+            catch (e) {
+                throw new Error(e.message)
+            }
+        },
+        notesByUser: async (parent, {id}, context, info) => {                                
+            try { 
+                if(!context.user) { throw new Error('You are not authenticated!') }
+                let ID = parseInt(id)
+                const notes = context.prisma.user.findUnique({
+                    where: {
+                        id: ID
+                    },
+                }).notes()
+                return notes               
             }
             catch (e) {
                 throw new Error(e.message)
@@ -87,14 +101,14 @@ module.exports = {
         },
         createNote: async (parent, args, context, info) => {
             try {
-                let userID = parseInt(args.userId);
+                //let userID = parseInt(args.userId);
                 if(!context.user) { throw new Error('You are not authenticated!') }
                 const note = await context.prisma.note.create({
                     data: {
-                        userId: userID,
                         title: args.title,
                         body: args.body,
-                        isDone: args.isDone
+                        isDone: args.isDone,
+                        user: {connect: {id: context.user.id}}                  
                     }
                 });  
                 return note
@@ -129,7 +143,30 @@ module.exports = {
                 where: { id:ID }
             });
             return user;
-        },         
-    },   
+        }, 
+        deleteNote: async (parent, {id}, context, info) => {
+            let ID = parseInt(id);
+            const note = context.prisma.note.delete({
+                where: { id:ID }
+            });
+            return note;
+        }        
+    },
+    User: {
+        notes: (parent, args, context, info) => {
+            const notes = context.prisma.user.findUnique({
+                where: {id:parent.id}
+            }).notes()
+            return notes
+        }
+    },
+    Note: {
+        user: (parent, args, context, info) => {
+            const user = context.prisma.note.findUnique({
+                where: {id: parent.id}
+            }).user()
+            return user
+        }
+    }   
 };
 

@@ -13,16 +13,17 @@ const typeDefs = gql`
     }
     type Note {
         id: ID!
-        title: String,
-        body: String,
-        isDone: Boolean,
-        user: User!
+        title: String!,
+        body: String!,
+        isDone: Boolean!,
+        user: User
     }
     type Query {
         users: [User]
         user(id:ID): User
 	    me: User
         notes: [Note]
+        notesByUser(id:ID): [Note]
         note(id:ID): Note       
     }
     type Mutation {
@@ -36,11 +37,11 @@ const typeDefs = gql`
 	    ): AuthPayload!
         deleteUser (id:ID!): User
         createNote(
-            userId:ID!
-            title: String!
+            title: String!           
             body: String!
             isDone: Boolean!
         ): Note!
+        deleteNote(id:ID!): Note
     }
 `;
 
