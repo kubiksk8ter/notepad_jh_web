@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { onLogout, apolloClient } from '@/vue-apollo'
-import { LOGGED_IN_USER } from '@/graphql/queries'
+import { LOGGED_IN_USER, LOGGED_IN_USER_NOTES } from '@/graphql/queries'
 import { LOGIN_USER, REGISTER_USER } from '@/graphql/mutations'
 import createPersistedState from 'vuex-persistedstate';
 
@@ -35,7 +35,8 @@ export default new Vuex.Store({
       state.user = { ...user }
       /*test
       setTimeout(()=>{
-        console.log("Vuex:\nisAuth: " + state.isAuthenticated + "\nauthStatus: " + state.authStatus + "\nuserId: " + state.user.id)
+        console.log("Vuex:\nisAuth: " + "\nauthStatus: " + state.authStatus + "\nuserId: " + state.user.id)
+        console.log(state.user)
       },1000)
       */
     },
@@ -82,14 +83,16 @@ export default new Vuex.Store({
     },
     async setUser ({ commit }) {
       const { data } = await apolloClient.query({ query: LOGGED_IN_USER })
-      commit('LOGIN_USER', data.me)
+      commit('LOGIN_USER', data.me);
     },
     async logOut ({ commit }) {
       commit('LOGOUT_USER')
       onLogout(apolloClient)
+    },
+    async getNotesFromLoggendInUser () {
+      await apolloClient.query({ query: LOGGED_IN_USER_NOTES })   
     } 
   },
-
   modules: {
   }
 })

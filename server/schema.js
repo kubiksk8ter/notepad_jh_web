@@ -8,7 +8,6 @@ const typeDefs = gql`
     type User {
         id: ID!
         username: String!,
-        password: String!,
         notes: [Note]!
     }
     type Note {
@@ -35,13 +34,19 @@ const typeDefs = gql`
 	        username: String!,
             password: String!
 	    ): AuthPayload!
-        deleteUser (id:ID!): User
+        deleteUser (id:ID!): User!
         createNote(
             title: String!           
             body: String!
             isDone: Boolean!
         ): Note!
-        deleteNote(id:ID!): Note
+        updateNote(
+            id:ID!
+            title: String
+            body: String
+            isDone: Boolean
+        ): Note!
+        deleteNote(id:ID!): Note!
     }
 `;
 

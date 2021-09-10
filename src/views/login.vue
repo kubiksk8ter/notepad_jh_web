@@ -39,14 +39,10 @@ export default {
         username: "",
         password: ""
       },     
-      animation: "",
-      users: [],
-      authFailed: false, 
-      
+      animation: "",     
     }   
   },
   created() {
-    //this.getUsernames()
   },
   methods: {
     ...mapActions(['login']),

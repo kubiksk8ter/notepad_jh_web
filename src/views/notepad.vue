@@ -3,22 +3,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {  
   name: 'notepad',
   data() {
     return {
-      
+      notes: []
     }   
   },
   created() {
-   
-  },
-  methods: {     
 
   },
+  methods: {     
+    ...mapActions(['getNotesFromLoggendInUser']),
+  },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   }
 }
 </script>

@@ -45,9 +45,7 @@ export default {
         password: ""
       },
       passwordRepeat: "",
-      animation: "",
-      users: [],
-      authFailed: false,    
+      animation: "",   
     }   
   },
   methods: { 
@@ -57,7 +55,7 @@ export default {
     },    
   },
   computed: {
-    ...mapGetters(['error'])
+    ...mapGetters(['error']),  
   }
 }
 </script>

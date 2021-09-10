@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
   // Check if the user is logged in
   /* test
   setTimeout(()=>{
-    console.log("Router:\nisAuth: " + store.getters.isAuthenticated + "\nauthStatus: " + store.getters.authStatus + "\nuserId: " + store.getters.user.id)
+    console.log("Router: \nauthStatus: " + store.getters.authStatus + "\nuserId: " + store.getters.user.notes)
   },1000)
   */
   const isUserLoggedIn = store.getters.isAuthenticated
