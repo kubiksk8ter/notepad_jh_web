@@ -14,7 +14,8 @@ export const LOGGED_IN_USER_NOTES = gql`
         notesByUser {
             id
             title
-            body  
+            body
+            isDone  
         }
     }
 `

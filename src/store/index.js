@@ -12,7 +12,8 @@ export default new Vuex.Store({
     token: localStorage.getItem('apollo-token') || null,
     user: {},
     authStatus: 'logged out',
-    error: null
+    error: null,
+    notes: []
   },
   plugins: [
     createPersistedState({
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     isAuthenticated: state => !!state.token,
     authStatus: state => state.authStatus,
     user: state => state.user,
-    error: state => state.error
+    error: state => state.error,
+    notes: state => state.notes
   },
 
   mutations: {
@@ -44,6 +46,9 @@ export default new Vuex.Store({
       state.authStatus = 'logged out'
       state.token = '' && localStorage.removeItem('apollo-token')
       state.user = {}
+    },
+    FETCH_NOTES (state, notes) {
+      state.notes = [...notes]
     }
   },
 
@@ -89,8 +94,15 @@ export default new Vuex.Store({
       commit('LOGOUT_USER')
       onLogout(apolloClient)
     },
-    async getNotesFromLoggendInUser () {
-      await apolloClient.query({ query: LOGGED_IN_USER_NOTES })   
+    async fetchNotes ({ commit }) {
+      const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })      
+      commit('FETCH_NOTES', data.notesByUser)
+      /*
+      console.log("data: " + data.notesByUser) 
+      for(let note of this.state.notes) {
+        console.log(note.title)
+      }
+      */ 
     } 
   },
   modules: {
