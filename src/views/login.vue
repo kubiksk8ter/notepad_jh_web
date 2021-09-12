@@ -23,8 +23,7 @@
                 class="btn btn-primary">Log in
         </button><br>
         <router-link to="/singUp" style="font-size:10px">Register new user</router-link>     
-      </form>
-      
+      </form>     
     </div>
 </template>
 

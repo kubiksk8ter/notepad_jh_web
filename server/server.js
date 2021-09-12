@@ -52,7 +52,7 @@ async function startApolloServer() {
       const token = req.get('Authorization') || ''
       return {    
         prisma,
-        user: getUser(token.replace('Bearer', ''))//{id: 10}
+        user: getUser(token.replace('Bearer', ''))//{id: 10}//
       }
     },
     introspection: true,

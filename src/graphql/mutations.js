@@ -15,4 +15,25 @@ export const LOGIN_USER = gql`
         }   
 `
 
-export default { REGISTER_USER, LOGIN_USER }
+export const CREATE_NOTE = gql`
+    mutation CreateNoteMutation($title: String!, $body: String!, $isDone: Boolean!) {
+        createNote(title: $title, body: $body, isDone: $isDone) {
+            id
+            title
+            body
+            isDone
+            user{
+            username
+            }
+        }
+    }
+`
+
+export const DELETE_NOTE = gql`
+    mutation DeleteNoteMutation($deleteNoteId: ID!) {
+        deleteNote(id: $deleteNoteId) {
+            id
+            title
+        }
+    }
+`

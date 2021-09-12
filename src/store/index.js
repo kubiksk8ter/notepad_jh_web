@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { onLogout, apolloClient } from '@/vue-apollo'
 import { LOGGED_IN_USER, LOGGED_IN_USER_NOTES } from '@/graphql/queries'
-import { LOGIN_USER, REGISTER_USER } from '@/graphql/mutations'
+import { LOGIN_USER, REGISTER_USER, CREATE_NOTE, DELETE_NOTE } from '@/graphql/mutations'
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
@@ -95,7 +95,7 @@ export default new Vuex.Store({
       onLogout(apolloClient)
     },
     async fetchNotes ({ commit }) {
-      const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })      
+      const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })     
       commit('FETCH_NOTES', data.notesByUser)
       /*
       console.log("data: " + data.notesByUser) 
@@ -103,7 +103,23 @@ export default new Vuex.Store({
         console.log(note.title)
       }
       */ 
-    } 
+    },
+    async createNote (_,noteDetails) {
+      try {      
+        const { data } = await apolloClient.mutate({ mutation: CREATE_NOTE, variables: { ...noteDetails}})           
+        console.log("Note " + data.createNote.id + " created!")
+      } catch (e) {
+        console.log(e.message)
+      }       
+    },
+    async deleteNote (_,deleteNoteId) {
+      try {     
+        const { data } = await apolloClient.mutate({ mutation: DELETE_NOTE, variables: { deleteNoteId } })
+        console.log("Note " + data.deleteNote.id + " deleted!")
+      } catch (e) {
+        console.log(e.message)
+      }       
+    }
   },
   modules: {
   }
