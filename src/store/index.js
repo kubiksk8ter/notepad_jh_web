@@ -35,12 +35,6 @@ export default new Vuex.Store({
     LOGIN_USER (state, user) {
       state.authStatus = 'logged in'
       state.user = { ...user }
-      /*test
-      setTimeout(()=>{
-        console.log("Vuex:\nisAuth: " + "\nauthStatus: " + state.authStatus + "\nuserId: " + state.user.id)
-        console.log(state.user)
-      },1000)
-      */
     },
     LOGOUT_USER (state) {
       state.authStatus = 'logged out'

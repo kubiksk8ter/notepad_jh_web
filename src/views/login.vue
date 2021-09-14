@@ -44,24 +44,10 @@ export default {
   created() {
   },
   methods: {
-    ...mapActions(['login']),
-         
+    ...mapActions(['login']),        
     loginUser: function() {   
         this.login(this.authDetails).then(()=>this.$router.push("/notepad"))
     }, 
-    /*
-    await this.$apollo.mutate({ mutation: gql`
-        mutation LoginMutation($loginUsername: String! $loginPassword: String!) {
-        login(username: $loginUsername password: $loginPassword) {
-            token                   
-            }
-        }`
-      , variables: { loginUsername: 'User3', loginPassword: 'admin'} }).then((res)=> {
-        console.log('User loged in!')
-        console.log(res?.data?.login.token)
-      })
-    }
-    */
   },
   computed: {
     ...mapGetters(['error'])

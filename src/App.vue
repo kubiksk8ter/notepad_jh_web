@@ -10,13 +10,6 @@
         <button class="vert-centered auth-button btn btn-primary" @click="logOut" > Log Out</button>
       </div>
     </div>
-    
-    <!--
-    <div id="nav">
-      <router-link to="/">login</router-link> |
-      <router-link to="/notepad">notepad</router-link>
-    </div>
-    -->
     <router-view id="router"/>
   </div>
 </template>
