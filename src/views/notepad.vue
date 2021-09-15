@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+import { LOGGED_IN_USER_NOTES } from '@/graphql/queries' 
 export default {  
   name: 'notepad',
   data() {
@@ -56,27 +57,33 @@ export default {
         title: "",
         body: "",
         isDone: false
-      },
-      
+      },     
     }   
   },
   created() {
-    this.fetchNotes() 
+    
   },
   methods: {     
-    ...mapActions(['fetchNotes', 'createNote', 'deleteNote']),
+    ...mapActions(['createNote', 'deleteNote']),
+
     async createNoteMethod() {
       await this.createNote(this.noteDetails)
-      await this.fetchNotes() 
+      //await this.fetchNotes() 
       this.creating = false
     },
     async deleteNoteMethod(id) {
       await this.deleteNote(id)
-      await this.fetchNotes()
+      //await this.fetchNotes()
+    },
+  },
+  apollo: {
+    notes: {
+      query: LOGGED_IN_USER_NOTES,
+      update: data => data.notesByUser
     }
   },
   computed: {
-    ...mapGetters(['notes']),
+    
   }
 }
 </script>

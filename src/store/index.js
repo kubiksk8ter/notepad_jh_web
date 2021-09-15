@@ -89,18 +89,17 @@ export default new Vuex.Store({
       onLogout(apolloClient)
     },
     async fetchNotes ({ commit }) {
-      const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })     
+      const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })
       commit('FETCH_NOTES', data.notesByUser)
-      /*
+      //test
       console.log("data: " + data.notesByUser) 
       for(let note of this.state.notes) {
         console.log(note.title)
-      }
-      */ 
+      }     
     },
     async createNote (_,noteDetails) {
       try {      
-        const { data } = await apolloClient.mutate({ mutation: CREATE_NOTE, variables: { ...noteDetails}})           
+        const { data } = await apolloClient.mutate({ mutation: CREATE_NOTE, variables: { ...noteDetails}, refetchQueries: [{query: LOGGED_IN_USER_NOTES}] })           
         console.log("Note " + data.createNote.id + " created!")
       } catch (e) {
         console.log(e.message)
@@ -108,7 +107,7 @@ export default new Vuex.Store({
     },
     async deleteNote (_,deleteNoteId) {
       try {     
-        const { data } = await apolloClient.mutate({ mutation: DELETE_NOTE, variables: { deleteNoteId } })
+        const { data } = await apolloClient.mutate({ mutation: DELETE_NOTE, variables: { deleteNoteId }, refetchQueries: [{query: LOGGED_IN_USER_NOTES}] })
         console.log("Note " + data.deleteNote.id + " deleted!")
       } catch (e) {
         console.log(e.message)
