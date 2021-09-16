@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { onLogout, apolloClient } from '@/vue-apollo'
 import { LOGGED_IN_USER, LOGGED_IN_USER_NOTES } from '@/graphql/queries'
-import { LOGIN_USER, REGISTER_USER, CREATE_NOTE, DELETE_NOTE } from '@/graphql/mutations'
+import { LOGIN_USER, REGISTER_USER, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from '@/graphql/mutations'
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
@@ -112,6 +112,14 @@ export default new Vuex.Store({
       } catch (e) {
         console.log(e.message)
       }       
+    },
+    async editNote (_,noteDetails) {
+      try {     
+        const { data } = await apolloClient.mutate({ mutation: EDIT_NOTE, variables: { ...noteDetails }, refetchQueries: [{query: LOGGED_IN_USER_NOTES}] })
+        console.log("Note " + data.updateNote.id + " updated!")
+      } catch (e) {
+        console.log(e.message)
+      } 
     }
   },
   modules: {
