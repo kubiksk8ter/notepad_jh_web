@@ -9,11 +9,11 @@
                 type="text"
                 class="form-control"
                 formControlName="title">
-        <input  v-model="noteDetails.body" 
+        <textarea  v-model="noteDetails.body" 
                 placeholder="body"
                 type="text"
                 class="form-control"
-                formControlName="body">
+                formControlName="body"></textarea>
         <label>Is note done?&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input  v-model="noteDetails.isDone"
                 type="checkbox" 
@@ -46,9 +46,12 @@ export default {
   },
   methods: {     
     ...mapActions(['createNote']),
-    async createNoteMethod() {
+    async createNoteMethod() {    
       await this.createNote(this.noteDetails) 
-      this.$emit('changeView', this.creating)      
+      this.$emit('changeView', this.creating) 
+      this.noteDetails.title = ""
+      this.noteDetails.body = ""
+      this.noteDetails.isDone = false     
     },
   },
 }
