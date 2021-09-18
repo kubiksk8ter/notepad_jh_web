@@ -1,34 +1,55 @@
 <template>
   <div id="notepad">
-    <button class="create auth-button btn btn-primary" v-on:click="creating=!creating">Create note</button><br>
-    <createNoteForm class="note" v-bind:creating='creating' @changeView="creating = false" ></createNoteForm>   
-    <div class="notes" v-for="note of notes" v-bind:key="note.id">     
-      <div class="note" v-bind:class="{greenBckgrn: note.isDone}">
-        <editNoteButton v-on:click.native="editNoteMethod(noteDetails)"></editNoteButton>       
+    <button class="create auth-button btn btn-primary" 
+            v-on:click="creating=!creating">Create note</button><br>
+    <createNoteForm class="note" 
+                    v-bind:creating='creating' 
+                    @changeView="creating = false" >
+    </createNoteForm> 
+                    
+    <div class="notes" 
+         v-for="note of notes" 
+         v-bind:key="note.id">     
+      <div class="note"
+           v-if="note.id!=editedNote.id || !editing" 
+           v-bind:class="{greenBckgrn: note.isDone}"          
+           >
+        <editNoteButton v-on:click.native="showForm(note.id)"></editNoteButton>       
         <deleteNoteButton v-on:click.native="deleteNoteMethod(note.id)" ></deleteNoteButton>      
         <div class="title">{{note.title}}</div>
-        <div class="body">{{note.body}}</div>
-      </div>      
+        <div class="body">{{note.body}}</div>        
+      </div>
+      <editNoteForm class="note"
+                    v-if="note.id==editedNote.id && editing"
+                    v-bind:editing='editing' 
+                    v-bind:note="editedNote"
+                    @changeView="editing = false">
+      </editNoteForm>                       
     </div>
+          
   </div>   
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import { LOGGED_IN_USER_NOTES } from '@/graphql/queries'
+import editNoteForm from '../components/editNoteForm.vue'
 import createNoteForm from '../components/createNoteForm.vue'
 import editNoteButton from '../components/editNoteButton.vue' 
 import deleteNoteButton from '../components/deleteNoteButton.vue'
 export default {  
   name: 'notepad',
   components: {
+    editNoteForm,
     createNoteForm,
     editNoteButton,
     deleteNoteButton
   },
   data() {
     return {
+      editedNote: {},
       creating: false,
+      editing: false,
       noteDetails: {
         id: 91, 
         title: "Edit test note", 
@@ -45,8 +66,11 @@ export default {
     async deleteNoteMethod(id) {
       await this.deleteNote(id)
     },
-    async editNoteMethod() {
-      await this.editNote(this.noteDetails)
+    showForm(id) {     
+      this.editedNote = this.notes.find(obj => 
+        obj.id == id     
+      )
+      this.editing = true
     }
   },
   apollo: {
@@ -73,6 +97,7 @@ export default {
     margin: 10px; padding: 10px;
     display: inline-block;
     min-width: 100px; min-height: 100px;
+    vertical-align: top;
   } 
   .title {
     font-weight: 900;

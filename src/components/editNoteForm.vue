@@ -1,26 +1,26 @@
 <template >
-  <div id="createNoteForm" v-if="creating">
+  <div id="editNoteForm" v-if="editing">
     <div>
-      <h6>Create note</h6>
-      <form @submit.prevent="createNoteMethod"
+      <h6 style="text-align: center;">Edit note</h6>
+      <form @submit.prevent="editNoteMethod"
             class="newNoteForm"> 
         <input  v-model="noteDetails.title" 
                 placeholder="Title"
                 type="text"
                 class="form-control"
                 formControlName="title">
-        <textarea v-model="noteDetails.body" 
-                  placeholder="body"
-                  type="text"
-                  class="form-control"
-                  formControlName="body"></textarea>
+        <textarea  v-model="noteDetails.body" 
+                placeholder="body"
+                type="text"
+                class="form-control"
+                formControlName="body"></textarea>
         <label>Is note done?&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input  v-model="noteDetails.isDone"
                 type="checkbox" 
                 class="_checkbox_1bhvr_30" ><br>
         <button type="submit"
                 class="btn btn-primary"
-                >Create
+                >Edit
         </button>    
       </form> 
     </div>
@@ -30,29 +30,30 @@
 <script>
 import { mapActions } from 'vuex' 
 export default {  
-  name: 'createNoteForm',
-  props: {creating: Boolean},
+  name: 'editNoteForm',
   data() {
     return {
       noteDetails: {
-        title: "",
-        body: "",
-        isDone: false
+        id: this.note.id,
+        title: this.note.title,
+        body: this.note.body,
+        isDone: this.note.isDone
       },       
     }   
   },
+  props: {
+      note: Object,
+      editing: Boolean
+    },
   created() {
-    
+      
   },
   methods: {     
-    ...mapActions(['createNote']),
-    async createNoteMethod() {    
-      await this.createNote(this.noteDetails) 
-      this.$emit('changeView', this.creating) 
-      this.noteDetails.title = ""
-      this.noteDetails.body = ""
-      this.noteDetails.isDone = false     
-    },
+    ...mapActions(['editNote']),    
+    async editNoteMethod() {
+      await this.editNote(this.noteDetails)
+      this.$emit('changeView', this.editing)           
+    },    
   },
 }
 </script>
