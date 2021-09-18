@@ -46,13 +46,14 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;  display: flex;
+  color: #2c3e50;  
+  display: flex;
   flex-direction: column; 
   justify-content: center; 
   align-items: center;
 }
 .nav {
-  width: 100%; height: 60px;
+  width: 100%;
   box-shadow: 0px 0px 10px 10px rgb(57, 57, 57);
 }
 img {
@@ -65,7 +66,7 @@ img {
   top: 50%; transform: translateY(-50%); 
 }
 .header {
-  position: relative; left: calc(50% - 130px);
+  position: relative; left: calc(50% - 130px); top: 32px;
   font-family: 'Allison', cursive;
 }
 .auth-status {

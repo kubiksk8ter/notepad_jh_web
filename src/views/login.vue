@@ -1,5 +1,5 @@
 <template>
-    <div id="login">
+    <div id="login" class="login">
       <form @submit.prevent="loginUser"
             class="login-form"
             v-on:mouseover="animation='colorize'"
@@ -57,11 +57,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .login {
+    height: calc(100vh - 100px);
+  }
   .login-form {
     width: 270px;
     border-radius: 5px;
     border: 1px solid rgb(155, 137, 137);
-    padding: 5px;    
+    padding: 5px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) 
   }
   .login-form > * {
     margin-top: 5px;

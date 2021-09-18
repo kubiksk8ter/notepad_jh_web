@@ -1,5 +1,5 @@
 <template>
-    <div id="sing-up">
+    <div id="sing-up" class="sing-up">
       <form @submit.prevent="singUp"
             class="sing-up-form"
             v-on:mouseover="animation='colorize'"
@@ -62,11 +62,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .sing-up {
+    height: calc(100vh - 100px);
+  }
   .sing-up-form {
     width: 270px;
     border-radius: 5px;
     border: 1px solid rgb(155, 137, 137);
-    padding: 5px;    
+    padding: 5px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);     
   }
   .sing-up-form > * {
     margin-top: 5px;
