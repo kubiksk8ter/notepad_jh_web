@@ -14,10 +14,13 @@
                   type="text"
                   class="form-control"
                   formControlName="body"></textarea>
-        <label>Is note done?&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input  v-model="noteDetails.isDone"
-                type="checkbox" 
-                class="_checkbox_1bhvr_30" ><br>
+        <div style="text-align: ceneter">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
+          <input v-model="noteDetails.isDone"
+                 type="checkbox" 
+                 class="_checkbox_1bhvr_30" 
+                 ><br>
+        </div>
+        
         <button type="submit"
                 class="btn btn-primary"
                 >Create

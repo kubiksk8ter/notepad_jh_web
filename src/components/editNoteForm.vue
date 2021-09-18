@@ -1,7 +1,7 @@
 <template >
   <div id="editNoteForm" v-if="editing">
     <div>
-      <h6 style="text-align: center;">Edit note</h6>
+      <h6 style="text-align: center">Edit note</h6>
       <form @submit.prevent="editNoteMethod"
             class="newNoteForm"> 
         <input  v-model="noteDetails.title" 
@@ -14,10 +14,13 @@
                 type="text"
                 class="form-control"
                 formControlName="body"></textarea>
-        <label>Is note done?&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input  v-model="noteDetails.isDone"
+        <div style="text-align: center">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
+           <input  v-model="noteDetails.isDone"
                 type="checkbox" 
-                class="_checkbox_1bhvr_30" ><br>
+                class="_checkbox_1bhvr_30" 
+                ><br> 
+        </div>
+        
         <button type="submit"
                 class="btn btn-primary"
                 >Edit

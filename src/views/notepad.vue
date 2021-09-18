@@ -96,7 +96,7 @@ export default {
     border-radius: 5px;   
     margin: 10px; padding: 10px;
     display: inline-block;
-    min-width: 100px; min-height: 100px;
+    width: 200px; min-height: 100px;
     vertical-align: top;
   } 
   .title {
