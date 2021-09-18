@@ -13,7 +13,7 @@ export default new Vuex.Store({
     user: {},
     authStatus: 'logged out',
     error: null,
-    notes: []
+    notes: [],
   },
   plugins: [
     createPersistedState({
@@ -76,6 +76,9 @@ export default new Vuex.Store({
         }
         else if(e.message == "GraphQL error: Incorrect password") {
           this.state.error = "Incorect password!"
+        }
+        else if(e.message == "Network error: NetworkError when attempting to fetch resource.") {
+          this.state.error = "Server down!"
         }
         console.log(e.message)
       }
