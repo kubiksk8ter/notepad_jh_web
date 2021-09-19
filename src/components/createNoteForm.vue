@@ -1,5 +1,5 @@
 <template >
-  <div id="createNoteForm" v-if="creating">
+  <div id="createNoteForm" class="rollDown" v-show="creating">
     
     <h6>Create note</h6>
 
@@ -64,5 +64,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  
+  @keyframes rollDown {
+    0% {width: 0px; height: 0px; opacity: 0}
+    100%{width: 200px; height: 225px; opacity: 1}
+  }
+  .rollDown {
+    animation-name: rollDown;
+    animation-duration: 0.7s;
+    overflow: hidden;
+  }
 </style>

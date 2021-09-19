@@ -1,5 +1,5 @@
 <template >
-  <div id="editNoteForm" v-if="editing">
+  <div id="editNoteForm" class="rollDown" v-show="editing">
 
     <h6 style="text-align: center">Edit note</h6>
 
@@ -65,5 +65,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  
+  @keyframes rollDown {
+    0% {height: 0px; opacity: 0}
+    100%{height: 225px; opacity: 1}
+  }
+  .rollDown {
+    animation-name: rollDown;
+    animation-duration: 0.7s;
+    overflow: hidden;
+  }
 </style>
