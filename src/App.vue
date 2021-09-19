@@ -21,11 +21,6 @@ export default {
   component: {
 
   },
-  data () {
-    return {
-
-    }
-  },
   methods: {
     logOut: function () {
       this.$store.dispatch('logOut')

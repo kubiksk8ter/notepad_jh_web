@@ -1,7 +1,10 @@
 <template>
   <div id="notepad">
+    <!-- Create note button --> 
     <button class="create auth-button btn btn-primary" 
-            v-on:click="creating=!creating">Create note</button><br>
+            v-on:click="creating=!creating">Create note
+    </button><br>
+    
     <createNoteForm class="note" 
                     v-bind:creating='creating' 
                     @changeView="creating = false" >
@@ -9,24 +12,26 @@
                     
     <div class="notes" 
          v-for="note of notes" 
-         v-bind:key="note.id">     
+         v-bind:key="note.id">
+
       <div class="note"
            v-if="note.id!=editedNote.id || !editing" 
            v-bind:class="{greenBckgrn: note.isDone}"          
            >
         <editNoteButton v-on:click.native="showForm(note.id)"></editNoteButton>       
-        <deleteNoteButton v-on:click.native="deleteNoteMethod(note.id)" ></deleteNoteButton>      
+        <deleteNoteButton v-on:click.native="deleteNoteMethod(note)" ></deleteNoteButton>      
         <div class="title">{{note.title}}</div>
         <div class="body">{{note.body}}</div>        
       </div>
+
       <editNoteForm class="note"
                     v-if="note.id==editedNote.id && editing"
                     v-bind:editing='editing' 
                     v-bind:note="editedNote"
                     @changeView="editing = false">
-      </editNoteForm>                       
-    </div>
-          
+      </editNoteForm>
+
+    </div>         
   </div>   
 </template>
 
@@ -49,29 +54,25 @@ export default {
     return {
       editedNote: {},
       creating: false,
-      editing: false,
-      noteDetails: {
-        id: 91, 
-        title: "Edit test note", 
-        body: "Success2", 
-        isDone: false
-      }       
+      editing: false,       
     }   
-  },
-  created() {
-    
   },
   methods: {     
     ...mapActions(['deleteNote', 'editNote']),
-    async deleteNoteMethod(id) {
-      await this.deleteNote(id)
+
+    async deleteNoteMethod(note) {
+      if(confirm(`Do you really want to delete "${note.title}" note?`)) {
+        await this.deleteNote(note.id)
+      }        
     },
+
     showForm(id) {     
       this.editedNote = this.notes.find(obj => 
         obj.id == id     
       )
       this.editing = true
     }
+
   },
   apollo: {
     notes: {
@@ -79,9 +80,6 @@ export default {
       update: data => data.notesByUser
     }
   },
-  computed: {
-    
-  }
 }
 </script>
 

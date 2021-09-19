@@ -1,32 +1,37 @@
 <template >
   <div id="createNoteForm" v-if="creating">
-    <div>
-      <h6>Create note</h6>
-      <form @submit.prevent="createNoteMethod"
-            class="newNoteForm"> 
-        <input  v-model="noteDetails.title" 
-                placeholder="Title"
+    
+    <h6>Create note</h6>
+
+    <form @submit.prevent="createNoteMethod"
+          class="newNoteForm">
+      <!-- Note title -->      
+      <input  v-model="noteDetails.title" 
+              placeholder="Title"
+              type="text"
+              class="form-control"
+              formControlName="title">
+      <!-- Note body -->         
+      <textarea v-model="noteDetails.body" 
+                placeholder="body"
                 type="text"
                 class="form-control"
-                formControlName="title">
-        <textarea v-model="noteDetails.body" 
-                  placeholder="body"
-                  type="text"
-                  class="form-control"
-                  formControlName="body"></textarea>
-        <div style="text-align: ceneter">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
-          <input v-model="noteDetails.isDone"
-                 type="checkbox" 
-                 class="_checkbox_1bhvr_30" 
-                 ><br>
-        </div>
+                formControlName="body" />
+      <!-- Note isDone -->           
+      <div style="text-align: ceneter">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
+        <input  v-model="noteDetails.isDone"
+                type="checkbox" 
+                class="_checkbox_1bhvr_30" 
+                ><br>
+      </div>
         
-        <button type="submit"
-                class="btn btn-primary"
-                >Create
-        </button>    
-      </form> 
-    </div>
+      <button type="submit"
+              class="btn btn-primary"
+              >Create
+      </button>
+
+    </form> 
+    
   </div>   
 </template>
 
@@ -43,9 +48,6 @@ export default {
         isDone: false
       },       
     }   
-  },
-  created() {
-    
   },
   methods: {     
     ...mapActions(['createNote']),

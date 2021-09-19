@@ -1,32 +1,37 @@
 <template >
   <div id="editNoteForm" v-if="editing">
-    <div>
-      <h6 style="text-align: center">Edit note</h6>
-      <form @submit.prevent="editNoteMethod"
-            class="newNoteForm"> 
-        <input  v-model="noteDetails.title" 
-                placeholder="Title"
-                type="text"
-                class="form-control"
-                formControlName="title">
-        <textarea  v-model="noteDetails.body" 
+
+    <h6 style="text-align: center">Edit note</h6>
+
+    <form @submit.prevent="editNoteMethod"
+          class="newNoteForm">
+      <!-- Note title --> 
+      <input  v-model="noteDetails.title" 
+              placeholder="Title"
+              type="text"
+              class="form-control"
+              formControlName="title">
+      <!-- Note body -->        
+      <textarea v-model="noteDetails.body" 
                 placeholder="body"
                 type="text"
                 class="form-control"
-                formControlName="body"></textarea>
-        <div style="text-align: center">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
-           <input  v-model="noteDetails.isDone"
+                formControlName="body" />
+      <!-- Note isDone -->          
+      <div style="text-align: center">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
+        <input  v-model="noteDetails.isDone"
                 type="checkbox" 
                 class="_checkbox_1bhvr_30" 
                 ><br> 
-        </div>
+      </div>
         
-        <button type="submit"
-                class="btn btn-primary"
-                >Edit
-        </button>    
-      </form> 
-    </div>
+      <button type="submit"
+              class="btn btn-primary"
+              >Edit
+      </button>
+
+    </form> 
+    
   </div>   
 </template>
 
@@ -48,9 +53,6 @@ export default {
       note: Object,
       editing: Boolean
     },
-  created() {
-      
-  },
   methods: {     
     ...mapActions(['editNote']),    
     async editNoteMethod() {

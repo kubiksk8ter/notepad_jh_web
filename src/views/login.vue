@@ -1,28 +1,34 @@
 <template>
     <div id="login" class="login">
+
       <form @submit.prevent="loginUser"
             class="login-form"
             v-on:mouseover="animation='colorize'"
             v-on:mouseleave="animation='decolorize'"
-            v-bind:class="animation">
-            Log-in  
+            v-bind:class="animation"> Log-in
+        <!-- Username -->      
         <input  v-model="authDetails.username" 
                 placeholder="username"
                 type="text"
                 class="form-control"
                 formControlName="username">
+        <!-- Passsword --> 
         <input  v-model="authDetails.password" 
                 placeholder="password"
                 type="password"
                 class="form-control"
                 formControlName="password">
+        <!-- Error log --> 
         <div class="error-log" v-if="error != null">
           {{error}}
-        </div>                
+        </div>
+
         <button type="submit"
                 class="btn btn-primary">Log in
         </button><br>
-        <router-link to="/singUp" style="font-size:10px">Register new user</router-link>     
+
+        <router-link to="/singUp" style="font-size:10px">Register new user</router-link>
+
       </form>     
     </div>
 </template>
@@ -40,8 +46,6 @@ export default {
       },     
       animation: "",     
     }   
-  },
-  created() {
   },
   methods: {
     ...mapActions(['login']),        

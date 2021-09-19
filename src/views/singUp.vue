@@ -1,33 +1,40 @@
 <template>
     <div id="sing-up" class="sing-up">
+
       <form @submit.prevent="singUp"
             class="sing-up-form"
             v-on:mouseover="animation='colorize'"
             v-on:mouseleave="animation='decolorize'"
-            v-bind:class="animation">
-            Sing-up  
+            v-bind:class="animation"> Sing-up
+        <!-- Username -->       
         <input  v-model="authDetails.username" 
                 placeholder="username"
                 type="text"
                 class="form-control"
                 formControlName="username">
+        <!-- Password -->         
         <input  v-model="authDetails.password" 
                 placeholder="password"
                 type="password"
                 class="form-control"
                 formControlName="password">
+        <!-- Password repeat -->         
         <input  v-model="passwordRepeat" 
                 placeholder="repeat password"
                 type="password"
                 class="form-control"
                 formControlName="repeat password">
+        <!-- Error log -->         
         <div class="error-log" v-if="error != null">
           {{error}}
         </div>
+
         <button type="submit"
                 class="btn btn-primary">Sing up
-        </button><br> 
-        <router-link to="/login" style="font-size:10px">Login</router-link>          
+        </button><br>
+
+        <router-link to="/login" style="font-size:10px">Login</router-link> 
+                 
       </form>
       
     </div>
