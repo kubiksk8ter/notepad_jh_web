@@ -6,7 +6,7 @@ const JWT_SECRET = 'secret'
 module.exports = {
     Query: {
         //info: () => 'This is the API of a Notepad UX',
-               
+        /*       
         users: async (parent, args, context, info) => {                                
             try { 
                 if(!context.user) { throw new Error('You are not authenticated!') }               
@@ -16,7 +16,7 @@ module.exports = {
                 throw new Error(e.message)
             }
         },
-        
+        */
         /*
         user: async (parent, {id}, context, info) => {
             try {
