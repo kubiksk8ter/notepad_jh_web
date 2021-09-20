@@ -14,7 +14,7 @@
          v-for="note of notes" 
          v-bind:key="note.id">
 
-      <div class="note"
+      <div class="note noteFade"
            v-if="note.id!=editedNote.id || !editing" 
            v-bind:class="{greenBckgrn: note.isDone}"          
            >
@@ -107,5 +107,14 @@ export default {
   }
   .greenBckgrn {
     background-color: rgb(116, 193, 116);
+  }
+  @keyframes noteFade {
+    0% {opacity: 0}
+    100%{opacity: 1}
+  }
+  .noteFade {
+    animation-name: noteFade;
+    animation-duration: 0.7s;
+    overflow: hidden;
   }
 </style>

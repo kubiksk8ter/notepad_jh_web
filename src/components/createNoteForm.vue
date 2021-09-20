@@ -1,5 +1,6 @@
 <template >
-  <div id="createNoteForm" class="rollDown" v-show="creating">
+<transition name="roll">
+  <div id="createNoteForm" v-show="creating">
     
     <h6>Create note</h6>
 
@@ -32,7 +33,8 @@
 
     </form> 
     
-  </div>   
+  </div>
+</transition>     
 </template>
 
 <script>
@@ -63,14 +65,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  @keyframes rollDown {
-    0% {width: 0px; height: 0px; opacity: 0}
-    100%{width: 200px; height: 225px; opacity: 1}
+<style scoped>   
+  .roll-enter-active, .roll-leave-active {
+    transition: all .5s;
   }
-  .rollDown {
-    animation-name: rollDown;
-    animation-duration: 0.7s;
-    overflow: hidden;
+  .roll-enter, .roll-leave-to {
+    opacity: 0;
+    transform: scale(0, 0);
   }
 </style>
