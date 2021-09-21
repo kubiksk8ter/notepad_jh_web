@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <div class="nav">
-      <img alt="Vue logo" src="./assets/logo.png"> 
+      <img alt="Vue logo" src="./assets/logo.png">
+      <router-link to="/login" style="font-size:10px; position: absolute; left: 18px;">Login</router-link>  
       <router-link class="header vert-centered" to="/notepad">
         <h1>Notepad J.H.</h1>
-      </router-link>          
+      </router-link>               
       <div class="auth-status" v-if="authStatus == 'logged in'">
         <div class="vert-centered">{{user.username}}</div>
         <button class="vert-centered auth-button btn btn-primary" @click="logOut" > Log Out</button>
