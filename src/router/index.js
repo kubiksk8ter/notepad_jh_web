@@ -8,7 +8,8 @@ const routes = [
   {
     path: '/',
     redirect: '/notepad',
-    name: 'home',
+    name: '',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/notepad.vue')
   },
   {
     path: '/login',
@@ -33,7 +34,7 @@ const routes = [
 ] 
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

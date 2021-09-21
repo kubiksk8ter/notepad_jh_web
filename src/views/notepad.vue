@@ -1,5 +1,6 @@
 <template>
   <div id="notepad">
+
     <!-- Create note button --> 
     <button class="create auth-button btn btn-primary" 
             v-on:click="creating=!creating">Create note
@@ -31,7 +32,7 @@
                     @changeView="editing = false">
       </editNoteForm>
 
-    </div>         
+    </div>       
   </div>   
 </template>
 
@@ -59,7 +60,6 @@ export default {
   },
   methods: {     
     ...mapActions(['deleteNote', 'editNote']),
-
     async deleteNoteMethod(note) {
       if(confirm(`Do you really want to delete "${note.title}" note?`)) {
         await this.deleteNote(note.id)
