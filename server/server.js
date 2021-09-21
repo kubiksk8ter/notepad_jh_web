@@ -15,7 +15,7 @@ const JWT_SECRET = 'secret'
 const getUser = token => {
   try {
     if (token) {
-      return jwt.verify(token, JWT_SECRET)
+      return jwt.verify(token, JWT_SECRET)   
     }
     return null
   } catch (err) {
@@ -49,10 +49,10 @@ async function startApolloServer() {
     typeDefs,
     resolvers,
     context: ({req}) => {
-      const token = req.get('Authorization') || ''
+      const token = req.get('Authorization') || ''    
       return {    
         prisma,
-        user: getUser(token.replace('Bearer', ''))//{id: 1}//
+        user: getUser(token.substring(token.indexOf(','), token.length ).replace(/,\s+/g, ''))//{id: 2}//
       }
     },
     introspection: true,
