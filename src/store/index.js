@@ -80,7 +80,7 @@ export default new Vuex.Store({
         else if(e.message == "Network error: NetworkError when attempting to fetch resource.") {
           this.state.error = "Server down!"
         }
-        console.log(e.message)
+        //console.log(e.message)
       }
     },
     async setUser ({ commit }) {

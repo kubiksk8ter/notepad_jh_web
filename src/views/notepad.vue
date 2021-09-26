@@ -19,10 +19,15 @@
            v-if="note.id!=editedNote.id || !editing" 
            v-bind:class="{greenBckgrn: note.isDone}"          
            >
-        <editNoteButton v-on:click.native="showForm(note.id)"></editNoteButton>       
-        <deleteNoteButton v-on:click.native="deleteNoteMethod(note)" ></deleteNoteButton>      
-        <div class="title">{{note.title}}</div>
-        <div class="body">{{note.body}}</div>        
+        <div class="text">       
+          <div class="title">{{note.title}}</div>
+          <div class="body">{{note.body}}</div>
+        </div>   
+        <div class="buttons">  
+          <editNoteButton v-on:click.native="showForm(note.id)"></editNoteButton>       
+          <deleteNoteButton v-on:click.native="deleteNoteMethod(note)" ></deleteNoteButton>
+        </div>
+                
       </div>
 
       <editNoteForm class="note"
@@ -86,17 +91,27 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .notes {
-    display: inline;
-    text-align: right;   
+    display: inline-block;     
   }
   .note {
     border: 1px solid black;
     border-radius: 5px;   
     margin: 10px; padding: 10px;
-    display: inline-block;
-    width: 200px;
-    vertical-align: top;
-  } 
+    display: flex; flex-direction: row;
+    width: fit-content;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    max-width: 200px;   
+  }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    width: 36px;
+    margin-right: 0; margin-left: auto;
+  }
   .title {
     font-weight: 900;
     text-align: center;
@@ -108,6 +123,7 @@ export default {
   .greenBckgrn {
     background-color: rgb(116, 193, 116);
   }
+
   @keyframes noteFade {
     0% {opacity: 0}
     100%{opacity: 1}

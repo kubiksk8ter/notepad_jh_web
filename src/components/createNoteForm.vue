@@ -1,11 +1,9 @@
 <template >
 <transition name="roll">
   <div id="createNoteForm" v-show="creating">
-    
-    <h6>Create note</h6>
-
     <form @submit.prevent="createNoteMethod"
           class="newNoteForm">
+      <h6>Create note</h6>    
       <!-- Note title -->      
       <input  v-model="noteDetails.title" 
               placeholder="Title"

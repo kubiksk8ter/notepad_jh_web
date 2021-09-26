@@ -1,10 +1,10 @@
 <template >
   <div id="editNoteForm" class="rollDown" v-show="editing">
 
-    <h6 style="text-align: center">Edit note</h6>
-
-    <form @submit.prevent="editNoteMethod"
+    <form @submit.prevent="editNoteMethod"     
           class="newNoteForm">
+
+      <h6 style="text-align: center">Edit note</h6>   
       <!-- Note title --> 
       <input  v-model="noteDetails.title" 
               placeholder="Title"
@@ -73,5 +73,6 @@ export default {
     animation-name: rollDown;
     animation-duration: 0.7s;
     overflow: hidden;
+
   }
 </style>
