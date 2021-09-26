@@ -15,7 +15,9 @@ export const LOGGED_IN_USER_NOTES = gql`
             id
             title
             body
-            isDone  
+            isDone
+            createdAt
+            updatedAt  
         }
     }
 `

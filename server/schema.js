@@ -1,4 +1,5 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server')
+//const { DateTimeTypeDefinition } = require('graphql-scalars')
 
 const typeDefs = gql`
     type AuthPayload {
@@ -11,11 +12,13 @@ const typeDefs = gql`
         notes: [Note]!
     }
     type Note {
-        id: ID!
+        id: ID!,       
         title: String!,
         body: String!,
         isDone: Boolean!,
-        user: User
+        user: User,
+        createdAt: Float,
+        updatedAt: Float,
     }
     type Query {
         users: [User]
