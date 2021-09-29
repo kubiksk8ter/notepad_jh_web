@@ -57,9 +57,24 @@ export default {
   },
   methods: { 
     ...mapActions(['register']),   
-    singUp() {       
-      this.register(this.authDetails).then(() => this.$router.push('/notepad'))
-    },    
+    singUp() {
+      if(this.validatePassword()) {
+        this.register(this.authDetails).then(() => this.$router.push('/notepad'))
+      }          
+    },
+    validatePassword() {
+      if (this.authDetails.password.length < 5) {
+        this.$store.commit('SET_ERROR', "Password must be longer than 5 characters!")
+        return false
+      }
+      else if(this.authDetails.password != this.passwordRepeat) {
+        this.$store.commit('SET_ERROR', "Please repeat password correctly!")
+        return false
+      }
+      else {
+        return true
+      }      
+    }    
   },
   computed: {
     ...mapGetters(['error']),  

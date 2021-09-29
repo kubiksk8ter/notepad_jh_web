@@ -43,6 +43,9 @@ export default new Vuex.Store({
     },
     FETCH_NOTES (state, notes) {
       state.notes = [...notes]
+    },
+    SET_ERROR(state, message) {
+      state.error = message
     }
   },
 
@@ -58,7 +61,7 @@ export default new Vuex.Store({
         this.state.error = null
       } catch (e) {
         if(e.message.includes("Unique constraint failed on the fields: (`username`)")) {
-          this.state.error = "Account with this username allready exists!"
+          commit('SET_ERROR', "Account with this username allready exists!")
         }       
       }
     },
@@ -69,16 +72,16 @@ export default new Vuex.Store({
         commit('SET_TOKEN', token)
         localStorage.setItem('apollo-token', token)
         dispatch('setUser')
-        this.state.error = null
+        commit('SET_ERROR', null)
       } catch (e) {
         if(e.message == "GraphQL error: Cannot read property 'password' of null") {
-          this.state.error = "Incorrect name or password!"
+          commit('SET_ERROR', "Incorrect name!")
         }
         else if(e.message == "GraphQL error: Incorrect password") {
-          this.state.error = "Incorect password!"
+          commit('SET_ERROR', "Incorect password!")
         }
         else if(e.message == "Network error: NetworkError when attempting to fetch resource.") {
-          this.state.error = "Server down!"
+          commit('SET_ERROR', "Server down!")
         }
         //console.log(e.message)
       }
