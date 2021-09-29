@@ -11,9 +11,8 @@
                       @changeView="creating = false" >
       </createNoteForm> 
                       
-      <div class="notes" 
-          v-for="note of notes" 
-          v-bind:key="note.id">
+      <div v-for="note of notes" 
+           v-bind:key="note.id">
 
         <div class="note noteFade"
             v-if="note.id!=editedNote.id || !editing" 
@@ -23,11 +22,16 @@
             <div class="title">{{note.title}}</div>
             <div class="body">{{note.body}}</div>
             <div class="time">
-              c: {{getTime(note.createdAt)}}<br>
-              <div v-if="note.createdAt != note.updatedAt">
-                u: {{getTime(note.updatedAt)}}</div>
+              <div class="created"
+                   title="Creation time">
+                {{getTime(note.createdAt)}}</div>
+              <div class="updated"
+                   title="Update time" 
+                   v-if="getTime(note.createdAt) != getTime(note.updatedAt)">
+                {{getTime(note.updatedAt)}}</div>
             </div>
-          </div>   
+          </div> 
+
           <div class="buttons">  
             <editNoteButton v-on:click.native="showForm(note.id)"></editNoteButton>       
             <deleteNoteButton v-on:click.native="deleteNoteMethod(note)" ></deleteNoteButton>
@@ -125,12 +129,8 @@ export default {
     margin-right: 10px;
     max-width: 200px;     
   }
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    width: 36px;
-    margin-right: 0; margin-left: auto;
-  }
+  .created { color: rgb(53, 145, 53) }
+  .updated { color: rgb(24, 96, 221) }
   .title {
     font-weight: 900;
     text-align: center;
@@ -144,6 +144,12 @@ export default {
     margin-bottom: -8px; margin-top: auto;
     text-align: left;
     font-size: 10px;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    width: 36px;
+    margin-right: 0; margin-left: auto;
   }
   .greenBckgrn {
     background-color: rgb(116, 193, 116);

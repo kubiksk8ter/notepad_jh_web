@@ -42,7 +42,7 @@ async function startApolloServer() {
     development: { ssl: false, port: 4000, hostname: 'localhost' }
   };
 
-  const environment = process.env.NODE_ENV || 'development';
+  const environment = process.env.NODE_ENV || 'production';
   const config = configurations[environment];
 
   const server = new ApolloServer({ 
@@ -52,7 +52,7 @@ async function startApolloServer() {
       const token = req.get('Authorization') || ''    
       return {    
         prisma,
-        user: {id: 10}//getUser(token.substring(token.indexOf(','), token.length ).replace(/,\s+/g, ''))//
+        user: getUser(token.substring(token.indexOf(','), token.length ).replace(/,\s+/g, ''))//{id: 10}//
       }
     },
     introspection: true,
