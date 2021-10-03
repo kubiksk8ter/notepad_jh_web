@@ -1,10 +1,21 @@
 <template>
   <div id="notepad">
-
+    
     <!-- Create note button --> 
-    <button class="create auth-button btn btn-primary" 
+    <button class="auth-button btn btn-primary" 
             v-on:click="creating=!creating">Create note
     </button><br>
+
+    <input type="checkbox" 
+           class=" btn-check" 
+           id="btn-check-outlined" 
+           v-on:click="reverseNotesStatus()"
+           autocomplete="off">
+    <label class="arrangement-btn btn btn-outline-success" 
+           for="btn-check-outlined"
+           title="Sort notes by creation time">{{reverseStatus}}
+    </label>
+
     <div class="arranged">
       <createNoteForm class="note" 
                       v-bind:creating='creating' 
@@ -70,7 +81,8 @@ export default {
     return {
       editedNote: {},
       creating: false,
-      editing: false,       
+      editing: false,
+      reverseStatus: "Descending"       
     }   
   },
   methods: {     
@@ -86,7 +98,7 @@ export default {
       const month = formatedDate.getMonth()
       const year = formatedDate.getFullYear()
       const hours = formatedDate.getHours()
-      const minutes = formatedDate.getMinutes()
+      const minutes = (formatedDate.getMinutes() < 10 ? '0' : '') + formatedDate.getMinutes()
       const fullTime = `
         ${day}.${month}.${year} - ${hours}:${minutes}
       `
@@ -97,20 +109,29 @@ export default {
         obj.id == id     
       )
       this.editing = true
-    }
-
+    },
+    reverseNotesStatus() {
+      this.notes.reverse()
+      this.reverseStatus == "Ascending" ? 
+      this.reverseStatus = "Descending" : 
+      this.reverseStatus = "Ascending"
+    },
   },
   apollo: {
     notes: {
       query: LOGGED_IN_USER_NOTES,
       update: data => data.notesByUser
-    }
+    },
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .arrangement-btn {
+    margin-top: 10px; 
+    font-size: 13px;
+  }
   .arranged {   
     display: flex; 
     flex-flow: row wrap;
