@@ -43,7 +43,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // Check if the user is logged in
   const isUserLoggedIn = store.getters.isAuthenticated
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {    
     if (!isUserLoggedIn) {
       store.dispatch('logOut')
       if(from.path == "/singUp") {
@@ -59,9 +59,11 @@ router.beforeEach((to, from, next) => {
         })
       }
     } else {
+      store.commit('SET_ERROR', null)
       next()
     }
   } else {
+    store.commit('SET_ERROR', null)
     next()
   }
 })

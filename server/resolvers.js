@@ -63,14 +63,14 @@ module.exports = {
                 const notes = context.prisma.user.findUnique({
                     where: {
                         id: context.user.id
-                    },
+                    },                  
                 }).notes()
                 return notes               
             }
             catch (e) {
                 throw new Error(e.message)
             }
-        },
+        },       
         /* 
         note: async (parent, {id}, context, info) => {
             try {

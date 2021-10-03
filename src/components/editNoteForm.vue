@@ -15,7 +15,7 @@
       <textarea v-model="noteDetails.body" 
                 placeholder="body"
                 type="text"
-                class="form-control"
+                class="form-control body"
                 formControlName="body" />
       <!-- Note isDone -->          
       <div style="text-align: center">Is note done?&nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,6 +65,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .body {
+    height: 77px;
+  }
   @keyframes rollDown {
     0% {height: 0px; opacity: 0}
     100%{height: 225px; opacity: 1}
@@ -73,6 +76,6 @@ export default {
     animation-name: rollDown;
     animation-duration: 0.7s;
     overflow: hidden;
-
   }
+
 </style>

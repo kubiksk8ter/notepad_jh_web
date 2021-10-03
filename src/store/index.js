@@ -94,6 +94,7 @@ export default new Vuex.Store({
       commit('LOGOUT_USER')
       onLogout(apolloClient)
     },
+    /*
     async fetchNotes ({ commit }) {
       const {data} = await apolloClient.query({ query: LOGGED_IN_USER_NOTES })
       commit('FETCH_NOTES', data.notesByUser)
@@ -103,6 +104,7 @@ export default new Vuex.Store({
         console.log(note.title)
       }     
     },
+    */
     async createNote (_,noteDetails) {
       try {      
         const { data } = await apolloClient.mutate({ mutation: CREATE_NOTE, variables: { ...noteDetails}, refetchQueries: [{query: LOGGED_IN_USER_NOTES}] })           
