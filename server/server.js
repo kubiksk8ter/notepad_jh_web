@@ -38,7 +38,7 @@ main()
 async function startApolloServer() {
   const configurations = {
     // Note: You may need sudo to run on port 443
-    production: { ssl: true, port: 5000, hostname: 'notepad.jakubholecek.cz' },
+    production: { ssl: true, port: *, hostname: '*' }, // must be completed
     development: { ssl: false, port: 4000, hostname: 'localhost' }
   };
 
@@ -52,7 +52,7 @@ async function startApolloServer() {
       const token = req.get('Authorization') || ''    
       return {    
         prisma,
-        user: {id: 2}//getUser(token.substring(token.indexOf(','), token.length ).replace(/,\s+/g, ''))//
+        user: getUser(token.substring(token.indexOf(','), token.length ).replace(/,\s+/g, ''))
       }
     },
     introspection: true,
@@ -69,8 +69,8 @@ async function startApolloServer() {
     // Make sure these files are secured.
     httpServer = https.createServer(
       {
-        key: fs.readFileSync(`/var/www/notepad.jakubholecek.cz/ssl/notepad.jakubholecek.cz-le.key`),
-        cert: fs.readFileSync(`/var/www/notepad.jakubholecek.cz/ssl/notepad.jakubholecek.cz-le.crt`)
+        key: fs.readFileSync(`*`), // must be completed 
+        cert: fs.readFileSync(`*`) // must be completed 
       },
       app,
     );
