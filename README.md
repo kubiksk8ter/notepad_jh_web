@@ -1,6 +1,6 @@
 # notepad_jh_web
 
-Simple notepad web app with account creation and authorization created by Vue.js <br>
+Simple notepad web app with account creation and authorization created in Vue.js <br>
 
 ## Project setup
 ```
